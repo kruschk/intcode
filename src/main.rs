@@ -1,6 +1,7 @@
-use intcode;
+use intcode::machine::Machine;
 use std::{
     env,
+    io,
     path::Path,
     process,
 };
@@ -14,7 +15,8 @@ fn main() {
             process::exit(1);
         }
     };
-    let mut src = intcode::parse_source(Path::new(
-        &src_filename)).unwrap();
-    intcode::execute_intcode_program(&mut src);
+    let mut machine = Machine::new_from_file(Path::new(&src_filename))
+        .expect("Error creating a machine.");
+    machine.execute(io::stdin(), io::stdout()).expect("IO error occurred.");
+    machine.execute(io::stdin(), io::stdout()).expect("IO error occurred.");
 }
